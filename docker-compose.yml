@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: API/Dockerfile
+    ports:
+      - "7076:7076"
+    environment:
+      - ASPNETCORE_URLS=http://+:7076
+      - ASPNETCORE_ENVIRONMENT=Development
