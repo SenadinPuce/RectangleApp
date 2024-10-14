@@ -5,7 +5,6 @@ namespace Infrastructure.Interfaces
 	public interface IRectangleService
 	{
 		Task<Rectangle> GetRectangleAsync();
-		Task SaveRectangleAsync(Rectangle rectangle);
-		Task<bool> ValidateRectangleAsync(Rectangle rectangle);
+		Task UpdateRectangleAsync(Rectangle rectangle);
 	}
 }

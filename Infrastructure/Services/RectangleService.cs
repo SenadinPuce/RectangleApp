@@ -8,6 +8,7 @@ namespace Infrastructure.Services
 	public class RectangleService : IRectangleService
 	{
 		private readonly string? _jsonFilePath;
+		private readonly SemaphoreSlim _semaphore = new(1, 1);
 
 		public RectangleService()
 		{
@@ -23,38 +24,50 @@ namespace Infrastructure.Services
 
 		public async Task<Rectangle> GetRectangleAsync()
 		{
-			if(_jsonFilePath == null)
-			{
-				throw new Exception("Path is null");
-			}
-
-			var dimensionsJson = await File.ReadAllTextAsync(_jsonFilePath);
-
-			var rectangle = JsonSerializer.Deserialize<Rectangle>(dimensionsJson)
-				?? throw new Exception("Rectangle is null");
-
-			return rectangle;
-		}
-
-		public async Task SaveRectangleAsync(Rectangle rectangle)
-		{
 			if (_jsonFilePath == null)
 			{
 				throw new Exception("Path is null");
 			}
 
-			var dimensionsJson = JsonSerializer.Serialize(rectangle);
+			await _semaphore.WaitAsync();
 
-			await File.WriteAllTextAsync(_jsonFilePath, dimensionsJson);
-
-			return;
+			try
+			{
+				var dimensionsJson = await File.ReadAllTextAsync(_jsonFilePath);
+				var rectangle = JsonSerializer.Deserialize<Rectangle>(dimensionsJson)
+					?? throw new Exception("Rectangle is null");
+				return rectangle;
+			}
+			finally
+			{
+				_semaphore.Release();
+			}
 		}
 
-		public async Task<bool> ValidateRectangleAsync(Rectangle rectangle)
+		public async Task UpdateRectangleAsync(Rectangle rectangle)
 		{
-			await Task.Delay(10000);
+			await Task.Delay(1000);
 
-			return rectangle.Width > rectangle.Height;
+			if (rectangle.Width > rectangle.Height)
+			{
+				throw new Exception("Width cannot be greater than height");
+			}
+
+			if (_jsonFilePath == null)
+			{
+				throw new Exception("Path is null");
+			}
+
+			 await _semaphore.WaitAsync();
+            try
+            {
+                var dimensionsJson = JsonSerializer.Serialize(rectangle);
+                await File.WriteAllTextAsync(_jsonFilePath, dimensionsJson);
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
 		}
 	}
 }

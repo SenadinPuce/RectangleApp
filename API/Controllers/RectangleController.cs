@@ -20,19 +20,17 @@ namespace API.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult> SaveRectangle(Rectangle rectangle)
+		public async Task<ActionResult> UpdateRectangle(Rectangle rectangle)
 		{
-			await _rectangleService.SaveRectangleAsync(rectangle);
-
-			return Ok();
-		}
-
-		[HttpPost("validate")]
-		public async Task<ActionResult<bool>> ValidateRectangle(Rectangle rectangle)
-		{
-			var isValid = await _rectangleService.ValidateRectangleAsync(rectangle);
-
-			return Ok(isValid);
+			try
+			{
+				await _rectangleService.UpdateRectangleAsync(rectangle);
+				return Ok();
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(new { error = ex.Message });
+			}
 		}
 
 	}

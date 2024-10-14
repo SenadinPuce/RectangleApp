@@ -1,0 +1,15 @@
+.perimeter-container {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.perimeter-label {
+  margin-right: 10px;
+}
+
+.perimeter-value {
+  color: #007bff;
+}
