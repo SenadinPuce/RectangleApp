@@ -6,6 +6,7 @@ RectangleApp is a web application that allows users to draw and manipulate recta
 
 ## Prerequisites
 
+- Git
 - Docker
 - Node.js (version 14.x or higher)
 - npm (version 6.x or higher)
@@ -16,7 +17,7 @@ RectangleApp is a web application that allows users to draw and manipulate recta
 ### 1. Clone the Repository
 Clone the repository to your local machine using Git:
 ```
-https://github.com/SenadinPuce/RectangleApp.git
+git clone https://github.com/SenadinPuce/RectangleApp.git
 ```
 
 ### 2. Start the Project with Docker

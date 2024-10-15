@@ -13,8 +13,8 @@ const Rectangle = ({ dimensions, onResize }) => {
 
     const handleMouseMove = (e) => {
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
-      const maxWidth = boundaryRect.width - 100; // 50px margin on each side
-      const maxHeight = boundaryRect.height - 100; // 50px margin on each side
+      const maxWidth = boundaryRect.width - 100;
+      const maxHeight = boundaryRect.height - 100; 
       const newWidth = Math.min(startWidth + (e.clientX - startX), maxWidth);
       const newHeight = Math.min(startHeight + (e.clientY - startY), maxHeight);
       onResize({ width: newWidth, height: newHeight }, false);
@@ -24,8 +24,8 @@ const Rectangle = ({ dimensions, onResize }) => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseup', handleMouseUp);
       const boundaryRect = boundaryRef.current.getBoundingClientRect();
-      const maxWidth = boundaryRect.width - 100; // 50px margin on each side
-      const maxHeight = boundaryRect.height - 100; // 50px margin on each side
+      const maxWidth = boundaryRect.width - 100; 
+      const maxHeight = boundaryRect.height - 100; 
       const newWidth = Math.min(startWidth + (e.clientX - startX), maxWidth);
       const newHeight = Math.min(startHeight + (e.clientY - startY), maxHeight);
       onResize({ width: newWidth, height: newHeight }, true);
